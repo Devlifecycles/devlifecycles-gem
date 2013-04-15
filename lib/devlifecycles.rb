@@ -1,4 +1,5 @@
 require 'devlifecycles/railtie'
+require 'devlifecycles/uses_devlifecycles'
 
 module Devlifecycles
   mattr_accessor :api_key
