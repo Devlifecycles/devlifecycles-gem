@@ -31,6 +31,8 @@ module Devlifecycles
     def send_payload(payload)
       puts "[DLC] Sending payload"
       uri = URI.parse(configuration.endpoint)
+      params = payload.merge(:api_key => Devlifecycles.api_key)
+
       http = Net::HTTP.new(uri.host, uri.port)
 
       if uri.scheme == 'https'
@@ -39,10 +41,7 @@ module Devlifecycles
       end
 
       request = Net::HTTP::Post.new(uri.request_uri)
-      final_payload = payload.merge(:api_key => Devlifecycles.api_key)
-      puts "[DLC] Payload:"
-      puts final_payload.to_json
-      request.body = final_payload.to_json
+      request.set_form_data(params)
       response = http.request(request)
 
       if response.code == '200'
