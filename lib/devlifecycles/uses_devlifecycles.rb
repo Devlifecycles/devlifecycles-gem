@@ -11,8 +11,16 @@ module Devlifecycles
     end
 
     def sync_with_devlifecycles
-      obj = {:key => self.id, :email => self.email, :created_at => self.created_at, :updated_at => self.updated_at}
-      "not implemented (but built object: #{obj})"
+      key = self.id # REQUIRED
+      if key.nil?
+        raise "Cannot sync unsaved records."
+      end
+      email ||= self.email
+      created_at ||= self.created_at
+      updated_at ||= self.updated_at
+
+      obj = {:key => key, :email => email, :created_at => created_at, :updated_at => updated_at}
+      Devlifecycles.send_payload(obj)
     end
   end
 end
