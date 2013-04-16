@@ -6,7 +6,7 @@ module Devlifecycles
     DEFAULT_ENDPOINT = "http://www.devlifecycles.com/end_users"
 
     def initialize
-      @endpoint = DEFAULT_ENDPOINT
+      @endpoint = ENV['DLC_ENDPOINT'] || DEFAULT_ENDPOINT
     end
   end
 end
