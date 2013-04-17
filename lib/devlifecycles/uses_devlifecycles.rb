@@ -10,17 +10,21 @@ module Devlifecycles
       end
     end
 
-    def sync_with_devlifecycles
+    def to_dlc
       key = self.id # REQUIRED
       if key.nil?
-        raise "Cannot sync unsaved records."
+        raise "Unsaved record"
       end
+
       email ||= self.email
       created_at ||= self.created_at
       updated_at ||= self.updated_at
-
       obj = {:key => key, :email => email, :created_at => created_at, :updated_at => updated_at}
-      Devlifecycles.send_payload(obj)
+      obj
+    end
+
+    def sync_with_devlifecycles
+      Devlifecycles.send_payload(to_dlc)
     end
   end
 end
