@@ -25,7 +25,11 @@ module Devlifecycles
     end
 
     def sync_with_devlifecycles
-      Devlifecycles.send_payload(to_dlc)
+      begin
+        Devlifecycles.send_payload(to_dlc)
+      rescue => e
+        puts "[DLC ERROR] #{e}"
+      end
     end
   end
 end
