@@ -32,6 +32,7 @@ module Devlifecycles
       puts "[DLC] Sending batch payload"
       uri = URI.parse(configuration.batch_endpoint)
       puts "[DLC] Using #{uri}"
+      puts "[DLC] payload: #{payload}"
       params = {:api_key => Devlifecycles.api_key, :end_users => payload.to_json}
 
       http = Net::HTTP.new(uri.host, uri.port)
