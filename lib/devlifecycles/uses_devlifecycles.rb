@@ -20,7 +20,15 @@ module Devlifecycles
       created_at ||= self.created_at
       updated_at ||= self.updated_at
       last_sign_in_at ||= self.last_sign_in_at
-      obj = {:key => key, :email => email, :created_at => created_at, :updated_at => updated_at, :last_sign_in_at => last_sign_in_at}
+      current_sign_in_at ||= self.current_sign_in_at
+      obj = {
+        :key => key,
+        :email => email,
+        :created_at => created_at,
+        :updated_at => updated_at,
+        :last_sign_in_at => last_sign_in_at,
+        :current_sign_in_at => current_sign_in_at
+      }
       obj
     end
 
