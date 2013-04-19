@@ -29,10 +29,10 @@ module Devlifecycles
     end
 
     def send_batch_payload(payload)
-      puts "[DLC] Sending batch payload"
+      logger.info "[DLC] Sending batch payload"
       uri = URI.parse(configuration.batch_endpoint)
-      puts "[DLC] Using #{uri}"
-      puts "[DLC] payload: #{payload}"
+      logger.info "[DLC] Using #{uri}"
+      logger.info "[DLC] payload: #{payload}"
       params = {:api_key => Devlifecycles.api_key, :end_users => payload.to_json}
 
       http = Net::HTTP.new(uri.host, uri.port)
@@ -47,16 +47,23 @@ module Devlifecycles
       response = http.request(request)
 
       if response.code == '200'
-        puts "[DLC] Success"
+        logger.info "[DLC] Success"
       else
-        puts "[DLC] Got unexpected status code from Devlifecycles API: #{response.code}"
-        puts "[DLC] Response: #{response.body}"
+        logger.error "[DLC] Got unexpected status code from Devlifecycles API: #{response.code}"
+        logger.error "[DLC] Response: #{response.body}"
       end
       response.body
    end
 
     def send_payload(payload)
       send_batch_payload([payload])
+    end
+
+    def logger
+      unless configuration.logger
+        configuration.logger = configuration.default_logger.call
+      end
+      configuration.logger
     end
   end
 end

@@ -1,3 +1,5 @@
+require 'logger'
+
 module Devlifecycles
   module UsesDevlifecycles
     extend ActiveSupport::Concern
@@ -36,7 +38,7 @@ module Devlifecycles
       begin
         Devlifecycles.send_payload(to_dlc)
       rescue => e
-        puts "[DLC ERROR] #{e}"
+        logger.error "[DLC ERROR] #{e}"
       end
     end
   end
